@@ -7,18 +7,6 @@
     <title>Neia Laços | @yield('pageName')</title>
     <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        main {
-            flex: 1 0 auto;
-        }
-    </style>
 </head>
 
 <body>
@@ -28,7 +16,7 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url('/') }}">Pedidos</a></li>
                     <li><a href="{{ route('customers.index') }}">Clientes</a></li>
-                    <li><a href="{{ url('/contato') }}">Materiais Base</a></li>
+                    <li><a href="{{ route('raw_materials.index') }}">Materiais Base</a></li>
                     <li><a href="{{ url('/produto') }}">Produtos</a></li>
                 </ul>
             </div>

@@ -1,14 +1,17 @@
 <?php
 
-use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\{
+    CustomerController,
+    RawMaterialController,
+};
 
 Route::get('/', function () {
     return view('orders.index');
 });
 
 Route::resource('customers', CustomerController::class);
+Route::resource('raw_materials', RawMaterialController::class);
 
 Route::prefix('customers/{customer}')->group(function () {
     Route::post('phone_numbers', [CustomerController::class, 'storePhoneNumber'])->name('phone_numbers.store');

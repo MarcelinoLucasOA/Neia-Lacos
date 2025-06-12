@@ -7,7 +7,7 @@
         <div class="col s12 m10 offset-m1">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">Detalhes do Cliente: {{ $customer->name ?? 'N/A' }}</span>
+                    <span class="card-title"><strong>Detalhes do Cliente: {{ $customer->name ?? 'N/A' }}</strong></span>
 
                     <p><strong>Nome:</strong> {{ $customer->name ?? 'N/A' }}</p>
                     <p><strong>Status:</strong> {{ $customer->status ?? 'N/A' }}</p>
@@ -15,13 +15,13 @@
                     <p><strong>Criado em:</strong> {{ $customer->created_at->format('d/m/Y H:i') ?? 'N/A' }}</p>
                     <p><strong>Última Atualização:</strong> {{ $customer->updated_at->format('d/m/Y H:i') ?? 'N/A' }}</p>
 
-                    <div class="divider"></div>
+                    <br><div class="divider"></div>
 
                     <h5 class="mt-4">Telefones:
                         <a class="btn-small green darken-2 right modal-trigger" href="#modal-add-phone">Adicionar Telefone</a>
                     </h5>
                     @if ($customer->phoneNumbers->isNotEmpty())
-                        <ul class="collection">
+                        <ul class="collection" style="padding: .5em">
                             @foreach ($customer->phoneNumbers as $phoneNumber)
                                 <li class="collection-item">
                                     <div>
@@ -30,7 +30,6 @@
                                             <span class="chip customer-label-chip">{{ $phoneNumber->label }}</span>
                                         @endif
                                         <div class="secondary-content">
-                                            {{-- Data attributes para o modal de edição de telefone --}}
                                             <a href="#modal-edit-phone" class="modal-trigger yellow-text text-darken-4 edit-phone-btn" data-id="{{ $phoneNumber->id }}" data-number="{{ $phoneNumber->number }}" data-label="{{ $phoneNumber->label }}">
                                                 Editar
                                             </a>
@@ -48,13 +47,13 @@
                         <p>Nenhum telefone cadastrado para este cliente.</p>
                     @endif
 
-                    <div class="divider"></div>
+                    <br><div class="divider"></div>
 
                     <h5 class="mt-4">Endereços:
                         <a class="btn-small green darken-2 right modal-trigger" href="#modal-add-address">Adicionar Endereço</a>
                     </h5>
                     @if ($customer->addresses->isNotEmpty())
-                        <ul class="collection">
+                        <ul class="collection" style="padding: .5em">
                             @foreach ($customer->addresses as $address)
                                 <li class="collection-item">
                                     <div>
@@ -68,7 +67,6 @@
                                             <span class="chip customer-label-chip">{{ $address->label }}</span>
                                         @endif
                                         <div class="secondary-content">
-                                            {{-- Data attributes para o modal de edição de endereço --}}
                                             <a href="#modal-edit-address" class="modal-trigger yellow-text text-darken-4 edit-address-btn" data-id="{{ $address->id }}" data-street="{{ $address->street }}" data-number="{{ $address->number }}" data-complement="{{ $address->complement }}" data-neighborhood="{{ $address->neighborhood }}" data-city="{{ $address->city }}" data-state="{{ $address->state }}" data-zip_code="{{ $address->zip_code }}" data-label="{{ $address->label }}">
                                                 Editar
                                             </a>
@@ -87,7 +85,6 @@
                     @endif
                 </div>
                 <div class="card-action right-align">
-                    {{-- Botão para abrir o modal de EDIÇÃO do cliente --}}
                     <a href="#modal-edit-customer" class="btn yellow darken-4 modal-trigger edit-customer-btn" data-id="{{ $customer->id }}" data-name="{{ $customer->name }}" data-status="{{ $customer->status }}" data-notes="{{ $customer->notes }}">
                         Editar Cliente
                     </a>
@@ -115,7 +112,6 @@
                 });
             @endif
 
-            // Lógica para o modal de EDIÇÃO do Cliente
             $('a.modal-trigger.edit-customer-btn').on('click', function() {
                 const form = $('#form-edit-customer');
                 const customerId = $(this).data('id');
@@ -130,14 +126,12 @@
                 M.updateTextFields();
             });
 
-            // Lógica para o modal de EDIÇÃO de Telefone
             $('a.modal-trigger.edit-phone-btn').on('click', function() {
                 const phoneNumberId = $(this).data('id');
                 const phoneNumberNumber = $(this).data('number');
                 const phoneNumberLabel = $(this).data('label');
 
                 const form = $('#form-edit-phone');
-                // AQUI ESTÁ A MUDANÇA: Use a função route() do Laravel para gerar a URL
                 form.attr('action', '{{ route('phone_numbers.update', ['customer' => $customer->id, 'phone_number' => ':phone_number_id']) }}'.replace(':phone_number_id', phoneNumberId));
 
                 $('#edit_phone_number').val(phoneNumberNumber);
@@ -146,7 +140,6 @@
                 $('.phone_number_mask').mask('(00) 90000-0000');
             });
 
-            // Lógica para o modal de EDIÇÃO de Endereço
             $('a.modal-trigger.edit-address-btn').on('click', function() {
                 const addressId = $(this).data('id');
                 const addressStreet = $(this).data('street');
@@ -174,26 +167,21 @@
                 $('.zip_code').mask('00000-000');
             });
 
-            // Lógica para lidar com erros de validação após um submit
             @if ($errors->any())
-                // Se houver erros nos campos principais do cliente (edição)
                 @if ($errors->hasAny(['name', 'status', 'notes']))
                     $('#modal-edit-customer').modal('open');
-                    // Repopula os campos do modal de edição com os valores antigos, caso o erro seja na edição
                     $('#edit_customer_name').val('{{ old('name', $customer->name) }}');
                     $('#edit_customer_notes').val('{{ old('notes', $customer->notes) }}');
                     $('#edit_customer_status').val('{{ old('status', $customer->status) }}');
                     M.FormSelect.init(document.getElementById('edit_customer_status'));
                     M.updateTextFields();
 
-                    // Se houver erros no modal de adicionar telefone
                 @elseif ($errors->hasAny(['number', 'label']) && Session::has('modal_add_phone_open'))
                     $('#modal-add-phone').modal('open');
                     $('#add_phone_number').val('{{ old('number') }}');
                     $('#add_phone_label').val('{{ old('label') }}');
                     M.updateTextFields();
 
-                    // Se houver erros no modal de adicionar endereço
                 @elseif ($errors->hasAny(['street', 'number', 'neighborhood', 'city', 'state', 'zip_code', 'complement', 'label']) && Session::has('modal_add_address_open'))
                     $('#modal-add-address').modal('open');
                     $('#add_address_street').val('{{ old('street') }}');

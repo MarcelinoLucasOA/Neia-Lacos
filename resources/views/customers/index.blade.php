@@ -7,9 +7,8 @@
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">Lista de Clientes</span>
-                    {{-- Botão para ABRIR O MODAL UNIFICADO no modo CRIAÇÃO --}}
-                    <a class="btn-small waves-effect waves-light green darken-2 right modal-trigger" href="#modal-create-customer" data-mode="create">Novo Cliente</a>
+                    <span class="card-title"><strong>Lista de Clientes</strong></span>
+                    <a class="btn-small green darken-2 right modal-trigger" href="#modal-create-customer" data-mode="create">Novo Cliente</a>
                     <table class="striped responsive-table">
                         <thead>
                             <tr>
@@ -26,7 +25,7 @@
                                     <td>
                                         @if ($customer->phoneNumbers->isNotEmpty())
                                             @foreach ($customer->phoneNumbers as $phoneNumber)
-                                                {{ $phoneNumber->number ?? 'N/A' }}
+                                                {{ $phoneNumber->number ?? 'Nenhum número cadastrado.' }}
                                                 @if ($phoneNumber->label)
                                                     <span class="chip customer-label-chip">{{ $phoneNumber->label }}</span>
                                                 @endif
@@ -51,7 +50,7 @@
                                                 <br>
                                             @endforeach
                                         @else
-                                            N/A
+                                            Nenhum endereço cadastrado.
                                         @endif
                                     </td>
                                     <td>
