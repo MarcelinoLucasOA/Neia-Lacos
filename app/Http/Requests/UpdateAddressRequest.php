@@ -20,7 +20,7 @@ class UpdateAddressRequest extends FormRequest
             'neighborhood' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255|size:2',
-            'zip_code' => 'required|string|max:255',
+            'zip_code' => 'nullable|string|max:255',
             'label' => 'nullable|string|max:255',
         ];
     }
@@ -52,7 +52,6 @@ class UpdateAddressRequest extends FormRequest
             'state.max' => 'O campo Estado não pode exceder 255 caracteres.',
             'state.size' => 'O campo Estado deve ter exatamente 2 caracteres (sigla do estado, ex: SP, MG).',
 
-            'zip_code.required' => 'O campo CEP é obrigatório.',
             'zip_code.string' => 'O campo CEP deve ser um texto.',
             'zip_code.max' => 'O campo CEP não pode exceder 255 caracteres.',
 

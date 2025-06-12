@@ -9,7 +9,7 @@
                 <div class="card-content">
                     <span class="card-title">Lista de Clientes</span>
                     {{-- Botão para ABRIR O MODAL UNIFICADO no modo CRIAÇÃO --}}
-                    <a class="btn-small waves-effect waves-light green darken-2 right modal-trigger" href="#modal-customer-upsert" data-mode="create">Novo Cliente</a>
+                    <a class="btn-small waves-effect waves-light green darken-2 right modal-trigger" href="#modal-create-customer" data-mode="create">Novo Cliente</a>
                     <table class="striped responsive-table">
                         <thead>
                             <tr>

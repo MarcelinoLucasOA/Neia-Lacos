@@ -15,7 +15,6 @@ class UpdateCustomerRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'status' => 'required|in:Ativo,Inativo',
             'notes' => 'nullable|string',
         ];
     }
@@ -26,9 +25,6 @@ class UpdateCustomerRequest extends FormRequest
             'name.required' => 'O campo Nome é obrigatório.',
             'name.string' => 'O campo Nome deve ser um texto.',
             'name.max' => 'O campo Nome não pode exceder 255 caracteres.',
-
-            'status.required' => 'O campo Status é obrigatório.',
-            'status.in' => 'O valor selecionado para Status é inválido.',
 
             'notes.string' => 'O campo Notas deve ser um texto.',
         ];
