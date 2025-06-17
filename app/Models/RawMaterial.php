@@ -12,9 +12,9 @@ class RawMaterial extends Model
     protected $fillable = [
         'name',
         'description',
-        'unit',
+        'unit_id',
         'cost_per_unit',
-        'min_stock_level',
+        'stock_level',
     ];
 
     public function unit()

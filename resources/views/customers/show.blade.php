@@ -88,7 +88,7 @@
                     <a href="#modal-edit-customer" class="btn yellow darken-4 modal-trigger edit-customer-btn" data-id="{{ $customer->id }}" data-name="{{ $customer->name }}" data-status="{{ $customer->status }}" data-notes="{{ $customer->notes }}">
                         Editar Cliente
                     </a>
-                    <a href="{{ route('customers.index') }}" class="btn blue darken-2">Voltar para Lista</a>
+                    <a href="{{ route('customers.index') }}" class="btn blue darken-2">Voltar à Lista</a>
                 </div>
             </div>
         </div>

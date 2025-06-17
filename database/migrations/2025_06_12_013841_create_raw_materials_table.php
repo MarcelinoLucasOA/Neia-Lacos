@@ -14,7 +14,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->foreignId('unit_id')->constrained('units')->onDelete('restrict');
             $table->decimal('cost_per_unit', 10, 2)->nullable();
-            $table->integer('min_stock_level')->default(0);
+            $table->integer('stock_level')->default(0);
             $table->timestamps();
         });
     }

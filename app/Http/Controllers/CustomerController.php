@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\{
+use App\Http\Requests\Customer\{
     StoreAddressRequest,
     StoreCustomerRequest,
     StorePhoneNumberRequest,
@@ -66,29 +66,15 @@ class CustomerController extends Controller
         return view('customers.show', compact('customer'));
     }
 
-    public function edit(Customer $customer)
-    {
-        $customer->load(['phoneNumbers', 'addresses']);
-        return view('customers.edit', compact('customer'));
-    }
-
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
         $customer->update($request->validated());
-
         return redirect()->route('customers.show', $customer->id)->with('success', 'Cliente atualizado com sucesso!');
-    }
-
-    public function destroy(Customer $customer)
-    {
-        $customer->delete();
-        return redirect()->route('customers.index')->with('success', 'Cliente excluído com sucesso!');
     }
 
     public function storePhoneNumber(StorePhoneNumberRequest $request, Customer $customer)
     {
         $customer->phoneNumbers()->create($request->validated());
-
         return redirect()->route('customers.show', $customer->id)->with('success', 'Telefone adicionado com sucesso!');
     }
 
@@ -99,7 +85,6 @@ class CustomerController extends Controller
         }
 
         $phoneNumber->update($request->validated());
-
         return redirect()->route('customers.show', $customer->id)->with('success', 'Telefone atualizado com sucesso!');
     }
 
@@ -116,7 +101,6 @@ class CustomerController extends Controller
     public function storeAddress(StoreAddressRequest $request, Customer $customer)
     {
         $customer->addresses()->create($request->validated());
-
         return redirect()->route('customers.show', $customer->id)->with('success', 'Endereço adicionado com sucesso!');
     }
 
@@ -127,7 +111,6 @@ class CustomerController extends Controller
         }
 
         $address->update($request->validated());
-
         return redirect()->route('customers.show', $customer->id)->with('success', 'Endereço atualizado com sucesso!');
     }
 

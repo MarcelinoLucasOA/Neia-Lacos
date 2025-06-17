@@ -42,14 +42,14 @@
             <h6><strong>Endereço (Opcional)</strong></h6>
             <div class="row">
                 <div class="input-field col s12 m4">
-                    <input id="create_customer_address_street" type="text" name="address_street" value="{{ old('address_street') }}" autocomplete="off">
+                    <input id="create_customer_address_street" type="text" name="address_street" value="{{ old('address_street') }}" autocomplete="off" required>
                     <label for="create_customer_address_street">Rua</label>
                     @error('address_street')
                         <span class="helper-text red-text">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="input-field col s6 m2">
-                    <input id="create_customer_address_number" type="text" name="address_number" value="{{ old('address_number') }}" autocomplete="off">
+                    <input id="create_customer_address_number" type="text" name="address_number" value="{{ old('address_number') }}" autocomplete="off" required>
                     <label for="create_customer_address_number">Número</label>
                     @error('address_number')
                         <span class="helper-text red-text">{{ $message }}</span>
@@ -63,21 +63,21 @@
                     @enderror
                 </div>
                 <div class="input-field col s12 m4">
-                    <input id="create_customer_address_neighborhood" type="text" name="address_neighborhood" value="{{ old('address_neighborhood') }}" autocomplete="off">
+                    <input id="create_customer_address_neighborhood" type="text" name="address_neighborhood" value="{{ old('address_neighborhood') }}" autocomplete="off" required>
                     <label for="create_customer_address_neighborhood">Bairro</label>
                     @error('address_neighborhood')
                         <span class="helper-text red-text">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="input-field col s6 m2">
-                    <input id="create_customer_address_city" type="text" name="address_city" value="{{ old('address_city') }}" autocomplete="off">
+                    <input id="create_customer_address_city" type="text" name="address_city" value="{{ old('address_city') }}" autocomplete="off" required>
                     <label for="create_customer_address_city">Cidade</label>
                     @error('address_city')
                         <span class="helper-text red-text">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="input-field col s6 m2">
-                    <input id="create_customer_address_state" type="text" name="address_state" value="{{ old('address_state') }}" autocomplete="off" maxlength="2">
+                    <input id="create_customer_address_state" type="text" name="address_state" value="{{ old('address_state') }}" autocomplete="off" maxlength="2" required>
                     <label for="create_customer_address_state">Estado (UF)</label>
                     @error('address_state')
                         <span class="helper-text red-text">{{ $message }}</span>

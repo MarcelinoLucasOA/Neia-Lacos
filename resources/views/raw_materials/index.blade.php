@@ -14,7 +14,7 @@
                                 <th>Nome</th>
                                 <th>Unidade</th>
                                 <th>Custo/Unid.</th>
-                                <th>Estoque Mínimo</th>
+                                <th>Estoque</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -24,18 +24,9 @@
                                     <td>{{ $rawMaterial->name }}</td>
                                     <td>{{ $rawMaterial->unit->symbol ?? 'N/A' }}</td>
                                     <td>R$ {{ number_format($rawMaterial->cost_per_unit, 2, ',', '.') }}</td>
-                                    <td>{{ $rawMaterial->min_stock_level }}</td>
+                                    <td>{{ $rawMaterial->stock_level }}</td>
                                     <td>
-                                        <a href="#modal-edit-raw_material" class="modal-trigger grey-text text-darken-2 edit-raw-material-btn" data-id="{{ $rawMaterial->id }}" data-name="{{ $rawMaterial->name }}" data-description="{{ $rawMaterial->description }}" data-unit_id="{{ $rawMaterial->unit_id }}" data-cost_per_unit="{{ $rawMaterial->cost_per_unit }}" data-min_stock_level="{{ $rawMaterial->min_stock_level }}" title="Editar Matéria-Prima">
-                                            <i class="material-icons">edit</i>
-                                        </a>
-                                        <form action="{{ route('raw_materials.destroy', $rawMaterial->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir esta matéria-prima?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-flat red-text text-darken-2" title="Excluir Matéria-Prima">
-                                                <i class="material-icons">delete</i>
-                                            </button>
-                                        </form>
+                                        <a href="{{ route('raw_materials.show', $rawMaterial->id) }}" class="btn-small blue darken-1">Detalhes</a>
                                     </td>
                                 </tr>
                             @empty
@@ -84,19 +75,7 @@
             });
 
             $('.edit-raw-material-btn').on('click', function() {
-                const rawMaterialId = $(this).data('id');
-                const rawMaterialName = $(this).data('name');
-                const rawMaterialDescription = $(this).data('description');
                 const rawMaterialUnitId = $(this).data('unit_id');
-                const rawMaterialCostPerUnit = $(this).data('cost_per_unit');
-                const rawMaterialMinStockLevel = $(this).data('min_stock_level');
-
-                const form = $('#form-edit-raw_material');
-                form.attr('action', `{{ route('raw_materials.update', ':raw_material_id') }}`.replace(':raw_material_id', rawMaterialId));
-
-                $('#edit_raw_material_name').val(rawMaterialName);
-                $('#edit_raw_material_description').val(rawMaterialDescription);
-
                 $('#edit_raw_material_unit_id').val(rawMaterialUnitId);
 
                 let unitText = '';
@@ -107,16 +86,12 @@
                     }
                 }
                 $('#edit_raw_material_unit_autocomplete').val(unitText);
-                $('#edit_raw_material_cost_per_unit').val(rawMaterialCostPerUnit);
-                $('#edit_raw_material_min_stock_level').val(rawMaterialMinStockLevel);
-
                 M.updateTextFields();
             });
 
             @if ($errors->any() && session('modal_open') == 'create_raw_material')
                 $('#modal-create-raw_material').modal('open');
                 M.updateTextFields();
-
                 @if (old('unit_id'))
                     $('#create_raw_material_unit_id').val('{{ old('unit_id') }}');
                 @endif
@@ -125,9 +100,6 @@
                 M.updateTextFields();
                 @if (old('unit_id'))
                     $('#edit_raw_material_unit_id').val('{{ old('unit_id') }}');
-                @endif
-                @if (old('unit_autocomplete_value'))
-                    $('#edit_raw_material_unit_autocomplete').val('{{ old('unit_autocomplete_value') }}');
                 @endif
             @endif
         });
