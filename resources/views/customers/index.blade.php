@@ -32,7 +32,7 @@
                                                 <br>
                                             @endforeach
                                         @else
-                                            N/A
+                                            Nenhum telefone cadastrado.
                                         @endif
                                     </td>
                                     <td>
